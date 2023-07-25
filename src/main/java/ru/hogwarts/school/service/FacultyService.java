@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,16 +15,16 @@ public class FacultyService {
         generatedFacultyId++;
         return faculty;
     }
-    public Faculty readFacultyById(Long studentId) {
-        return facultyMap.get(studentId);
+    public Faculty readFacultyById(Long facultyId) {
+        return facultyMap.get(facultyId);
     }
 
-    public Faculty updateFaculty(Long studentId, Faculty faculty) {
-        facultyMap.put(studentId, faculty);
+    public Faculty updateFaculty(Long facultyId, Faculty faculty) {
+        facultyMap.put(facultyId, faculty);
         return faculty;
     }
-    public Faculty deleteFaculty(Long studentId) {
-        return facultyMap.remove(studentId);
+    public Faculty deleteFaculty(Long facultyId) {
+        return facultyMap.remove(facultyId);
     }
 
 }
