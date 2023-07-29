@@ -23,7 +23,7 @@ public class FacultyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Faculty> readFacultyById(  Long id) {
+    public ResponseEntity<Faculty> readFacultyById(@PathVariable Long id) {
         Faculty readedFaculty = facultyService.readFacultyById(id);
         if (readedFaculty == null) {
             return ResponseEntity.notFound().build();
