@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import java.util.Collection;
 
 public interface FacultyRepository extends JpaRepository<Faculty,Long> {
+
     public Faculty createFaculty(Faculty faculty);
 
     public Faculty readFacultyById(Long facultyId);

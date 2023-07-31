@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Student;
 import java.util.Collection;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
+
     public Student createStudent(Student student);
 
     public Student readStudentById(Long studentId);

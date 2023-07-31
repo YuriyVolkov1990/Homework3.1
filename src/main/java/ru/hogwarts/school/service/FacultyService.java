@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
+
     private FacultyRepository facultyRepository;
 
     @Autowired

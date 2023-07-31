@@ -6,6 +6,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 import java.util.*;
 
 public abstract class StudentRepositoryImpl implements StudentRepository {
+
     private final Map<Long, Student> studentMap = new HashMap<>();
     private Long generatedStudentId = 0L;
     @Override

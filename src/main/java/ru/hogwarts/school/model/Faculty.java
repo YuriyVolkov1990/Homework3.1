@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import java.util.Objects;
 @Entity(name = "Faculty")
 public class Faculty {
+
     @Id
     @GeneratedValue
     private Long id;

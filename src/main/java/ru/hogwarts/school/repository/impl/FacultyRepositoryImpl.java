@@ -31,6 +31,7 @@ public abstract class FacultyRepositoryImpl implements FacultyRepository {
         return facultyMap.remove(facultyId);
     }
 
+
     @Override
     public Collection<Faculty> getFacultyByColor(String color) {
         List<Faculty> result = new ArrayList<>();
