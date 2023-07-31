@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.service.StudentService;
@@ -11,20 +12,14 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-
     private final StudentService studentService;
-
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-//        Long id = student.getId();
         Student createdStudent = studentService.createStudent(student);
-//        if (Objects.equals(id, createdStudent.getId())) {
-//            return ResponseEntity.badRequest().build();
-//        }
         return ResponseEntity.ok(createdStudent);
         }
 
