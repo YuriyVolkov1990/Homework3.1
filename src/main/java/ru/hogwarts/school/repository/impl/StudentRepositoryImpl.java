@@ -12,7 +12,6 @@ import java.util.*;
 import java.util.function.Function;
 
 public class StudentRepositoryImpl implements StudentRepository {
-
     private final Map<Long, Student> studentMap = new HashMap<>();
     private Long generatedStudentId = 0L;
     @Override
@@ -20,7 +19,6 @@ public class StudentRepositoryImpl implements StudentRepository {
         student.setId(generatedStudentId++);
         studentMap.put(student.getId(), student);
         return student;
-
     }
 
     @Override
