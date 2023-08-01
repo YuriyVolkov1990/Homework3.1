@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import java.util.Objects;
-@Entity(name = "Faculty")
+@Entity
 public class Faculty {
     @Id
     @GeneratedValue
