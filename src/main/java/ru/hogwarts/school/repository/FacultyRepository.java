@@ -7,13 +7,13 @@ import java.util.Collection;
 
 public interface FacultyRepository extends JpaRepository<Faculty,Long> {
 
-    public Faculty createFaculty(Faculty faculty);
+    Faculty createFaculty(Faculty faculty);
 
-    public Faculty readFacultyById(Long facultyId);
+    Faculty readFacultyById(Long facultyId);
 
-    public Faculty updateFaculty(Long facultyId, Faculty faculty);
+    Faculty updateFaculty(Long facultyId, Faculty faculty);
 
-    public Faculty deleteFaculty(Long facultyId);
+    Faculty deleteFaculty(Long facultyId);
 
-    public Collection<Faculty> getFacultyByColor(String color);
+    Collection<Faculty> getFacultyByColor(String color);
 }
