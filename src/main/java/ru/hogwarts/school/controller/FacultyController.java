@@ -14,13 +14,14 @@ import java.util.List;
 public class FacultyController {
 
     private final FacultyService facultyService;
+
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
     }
 
     @PostMapping
     public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
-       Faculty createdFaculty = facultyService.createFaculty(faculty);
+        Faculty createdFaculty = facultyService.createFaculty(faculty);
         return ResponseEntity.ok(createdFaculty);
     }
 
@@ -35,7 +36,7 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(),faculty);
+        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
         if (updatedFaculty == null) {
             return ResponseEntity.notFound().build();
         }
@@ -48,10 +49,12 @@ public class FacultyController {
         Faculty deletedFaculty = facultyService.deleteFaculty(id);
         return ResponseEntity.ok(deletedFaculty);
     }
+
     @GetMapping()
     public ResponseEntity<Collection<Faculty>> getAll() {
         return ResponseEntity.ok(facultyService.getAll());
     }
+
     @GetMapping("/filtered")
     public ResponseEntity<List<Faculty>> getFacultyByColor(@RequestParam(required = false) String color) {
         if (color != null && !color.isBlank()) {
@@ -59,4 +62,10 @@ public class FacultyController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+
+    @GetMapping("/by-color-or-name")
+    public Collection<Faculty> filteredByColorOrName(@RequestParam String colorOrName) {
+        return facultyService.getAllByNameOrColor(colorOrName,colorOrName);
+    }
+
 }

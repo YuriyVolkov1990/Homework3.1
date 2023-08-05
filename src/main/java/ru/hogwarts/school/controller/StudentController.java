@@ -13,6 +13,7 @@ import java.util.Collections;
 @RequestMapping("/student")
 public class StudentController {
     private final StudentService studentService;
+
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -21,7 +22,7 @@ public class StudentController {
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         Student createdStudent = studentService.createStudent(student);
         return ResponseEntity.ok(createdStudent);
-        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> readStudentById(@PathVariable Long id) {
@@ -47,15 +48,22 @@ public class StudentController {
         Student deletedStudent = studentService.deleteStudent(id);
         return ResponseEntity.ok(deletedStudent);
     }
+
     @GetMapping()
     public ResponseEntity<Collection<Student>> getAll() {
         return ResponseEntity.ok(studentService.getAll());
     }
+
     @GetMapping("/filtered")
     public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam(required = false) int age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.getStudentsByAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/age-between")
+    public Collection<Student> ageBetween(@RequestParam int min, @RequestParam int max) {
+        return studentService.getByAge(min,max);
     }
 }
