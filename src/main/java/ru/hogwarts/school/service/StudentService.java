@@ -32,7 +32,7 @@ public class StudentService {
                 .orElseThrow(StudentNotFoundException::new);
         existingStudent.setAge(student.getAge());
         existingStudent.setName(student.getName());
-        return student;
+        return studentRepository.save(existingStudent);
     }
 
     public Student deleteStudent(Long studentId) {

@@ -39,9 +39,6 @@ public class FacultyService {
         return faculty;
     }
 
-    public Faculty getById(Long facultyId) {
-        return facultyRepository.findById(facultyId).orElseThrow(FacultyNotFoundException::new);
-    }
     public Collection<Faculty> getAll() {
         return facultyRepository.findAll();
     }

@@ -9,14 +9,4 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
     List<Student> findAllByAge(int color);
-    Student createStudent(Student student);
-
-    Student readStudentById(Long studentId);
-
-    Student updateStudent(Long studentId, Student student);
-
-    Student deleteStudent(Long studentId);
-
-    Collection<Student> getStudentsByAge(int age);
-
 }
