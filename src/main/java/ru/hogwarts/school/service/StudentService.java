@@ -6,6 +6,7 @@ import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.*;
@@ -13,10 +14,12 @@ import java.util.*;
 @Service
 public class StudentService {
 
-    private final StudentRepository studentRepository ;
+    private final StudentRepository studentRepository;
+    private final FacultyRepository facultyRepository;
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
     }
 
     public Student createStudent(Student student) {
@@ -53,5 +56,11 @@ public class StudentService {
     public Collection<Student> getByAge(int min, int max) {
         return studentRepository.findAllByAgeBetween(min, max);
     }
+
+    public Collection<Student> getByFaculty(Long facultyId) {
+        return facultyRepository.findById(facultyId)
+                .map(Faculty::getStudents)
+                .orElseThrow(FacultyNotFoundException::new);
+   }
 }
 

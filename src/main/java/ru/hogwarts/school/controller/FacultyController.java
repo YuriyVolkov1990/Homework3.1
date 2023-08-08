@@ -34,9 +34,9 @@ public class FacultyController {
         return ResponseEntity.ok(readedFaculty);
     }
 
-    @PutMapping
-    public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
+    @PutMapping("/{id}")
+    public ResponseEntity<Faculty> updateFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
+        Faculty updatedFaculty = facultyService.updateFaculty(id, faculty);
         if (updatedFaculty == null) {
             return ResponseEntity.notFound().build();
         }
@@ -65,7 +65,11 @@ public class FacultyController {
 
     @GetMapping("/by-color-or-name")
     public Collection<Faculty> filteredByColorOrName(@RequestParam String colorOrName) {
-        return facultyService.getAllByNameOrColor(colorOrName,colorOrName);
+        return facultyService.getAllByNameOrColor(colorOrName, colorOrName);
     }
 
+    @GetMapping("/by-student")
+    public Faculty getByStudent(Long studentId) {
+        return facultyService.getByStudentId(studentId);
+    }
 }
