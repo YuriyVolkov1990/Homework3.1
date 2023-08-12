@@ -13,6 +13,17 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+    @OneToOne
+    @JoinColumn(name = "avatar_id")
+    private Avatar avatar;
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
 
     public Student(Long id, String name, int age) {
         this.id = id;
