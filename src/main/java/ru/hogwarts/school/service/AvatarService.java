@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Avatar;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -35,8 +36,9 @@ public class AvatarService {
         Path filePath = avatarPath.resolve(studentId + "." + fileExtension);
         byte[] data = avatarFile.getBytes();
         Files.write(filePath, data, StandardOpenOption.CREATE);
-        Avatar avatar = new Avatar();
-        avatar.setStudent(studentRepository.getReferenceById(studentId));
+
+        Student studentReference = studentRepository.getReferenceById(studentId);
+        Avatar avatar = avatarRepository.findFirstByStudent(studentReference).orElse(new Avatar());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setFileSize(avatarFile.getSize());
         avatar.setData(data);
