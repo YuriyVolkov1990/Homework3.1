@@ -44,4 +44,8 @@ public class AvatarService {
         avatarRepository.save(avatar);
         return avatar.getId();
     }
+
+    public Avatar getById(Long id) {
+        return avatarRepository.findById(id).orElseThrow(AvatarNotFoundException::new);
+    }
 }
