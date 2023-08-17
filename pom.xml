@@ -18,6 +18,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>net.sf.beaver</groupId>
             <artifactId>beaver-ant</artifactId>
             <version>0.9.11</version>

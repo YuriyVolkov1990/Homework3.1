@@ -17,6 +17,7 @@ public class Avatar {
     private String mediaType;
     private byte[] data;
     @OneToOne
+    @JsonIgnore
     private Student student;
 
     @Override
