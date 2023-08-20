@@ -43,12 +43,14 @@ public class FacultyControllerTest {
     @Test
     void create() {
         ResponseEntity<Faculty> resp = createFaculty("math", "blue");
+        assertThat(resp.getBody()).isNotNull();
         assertThat(resp.getBody().getName()).isEqualTo("math");
         assertThat(resp.getBody().getColor()).isEqualTo("blue");
     }
     @Test
     void getById() {
         ResponseEntity<Faculty> faculty = createFaculty("math", "blue");
+        assertThat(faculty.getBody()).isNotNull();
         Long id = faculty.getBody().getId();
         ResponseEntity<Faculty> resp = testRestTemplate.getForEntity("/faculty/" + id, Faculty.class);
         assertThat(resp.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -74,11 +76,13 @@ public class FacultyControllerTest {
         ResponseEntity<Faculty> response = createFaculty("math", "blue");
 
         Faculty faculty = response.getBody();
+        assertThat(faculty).isNotNull();
         faculty.setColor("red");
 
         testRestTemplate.put("/faculty/" + faculty.getId(), faculty);
 
         response = testRestTemplate.getForEntity("/faculty/" + faculty.getId(), Faculty.class);
+        assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getColor()).isEqualTo("red");
 
     }
@@ -104,11 +108,19 @@ public class FacultyControllerTest {
         Student student = new Student();
         student.setFaculty(expectedFaculty);
         ResponseEntity<Student> studentResp = testRestTemplate.postForEntity("/student", student, Student.class);
+        assertThat(studentResp.getBody()).isNotNull();
         Long studentId = studentResp.getBody().getId();
         faculty = testRestTemplate.getForEntity("/faculty/by-student?studentId=" + studentId,Faculty.class);
         assertThat(faculty.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(faculty.getBody()).isNotNull();
         assertThat(faculty.getBody()).isEqualTo(expectedFaculty);
+    }
+    @Test
+    void filteredByColor() {
+        ResponseEntity<Collection> response = testRestTemplate.getForEntity("/faculty/by-color-or-name?colorOrName=black", Collection.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().size()).isEqualTo(1);
     }
     private ResponseEntity<Faculty> createFaculty(String name, String color) {
         Faculty request = new Faculty();
