@@ -1,4 +1,4 @@
-package ru.hagwarts.testresttemplate;
+package ru.hogwarts.school.controller.testresttemplate;
 
 
 import org.junit.jupiter.api.AfterEach;

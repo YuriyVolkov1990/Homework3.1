@@ -30,8 +30,8 @@ public class StudentService {
         return studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
     }
 
-    public Student updateStudent(Long studentId, Student student) {
-        Student existingStudent = studentRepository.findById(studentId)
+    public Student updateStudent(Student student) {
+        Student existingStudent = studentRepository.findById(student.getId())
                 .orElseThrow(StudentNotFoundException::new);
         existingStudent.setAge(student.getAge());
         existingStudent.setName(student.getName());
