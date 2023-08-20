@@ -1,4 +1,4 @@
-package ru.hagwarts.controller_mockmvc;
+package ru.hagwarts.testresttemplate;
 
 
 import org.junit.jupiter.api.AfterEach;
