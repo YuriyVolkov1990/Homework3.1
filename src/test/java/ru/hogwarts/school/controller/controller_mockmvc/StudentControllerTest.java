@@ -69,7 +69,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    void update() throws Exception {// с этим методом возникает проблема, я её пока не решил, думаю
+    void update() throws Exception {
         Student student = new Student(1L,"ivan",20);
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
         when(studentRepository.save(any(Student.class))).thenReturn(student);
