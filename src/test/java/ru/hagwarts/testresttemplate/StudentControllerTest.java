@@ -14,7 +14,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -89,6 +91,30 @@ public class StudentControllerTest {
         testRestTemplate.delete("/student/" + response.getBody().getId());
         response = testRestTemplate.getForEntity("/student/" + response.getBody().getId(), Student.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+    @Test
+    void filtered() {
+        ResponseEntity<Collection> response = testRestTemplate.getForEntity("/student/filtered?age=17", Collection.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().size()).isEqualTo(1);
+    }
+    @Test
+    void byFaculty() {
+        ResponseEntity<List> forEntity = testRestTemplate.getForEntity("/student", List.class);
+        Faculty faculty = new Faculty(1L,"gffd","white");
+        List<Student> body = forEntity.getBody();
+        faculty.setStudents(body);
+        ResponseEntity<Faculty> facultyResp = testRestTemplate.postForEntity("/faculty", faculty, Faculty.class);
+        assertThat(facultyResp.getBody()).isNotNull();
+        Long facultyId = facultyResp.getBody().getId();
+        ResponseEntity<List> students = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + facultyId, List.class);
+        System.out.println("==============");
+        System.out.println(students.getBody());
+        System.out.println("==============");
+        assertThat(students.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(students.getBody()).isNotNull();
+        assertThat(students.getBody()).isEqualTo(faculty.getStudents());
     }
     private ResponseEntity<Student> createStudent(String name, int age) {
         Student request = new Student();

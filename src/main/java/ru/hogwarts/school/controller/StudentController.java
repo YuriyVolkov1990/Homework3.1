@@ -72,7 +72,7 @@ public class StudentController {
         return studentService.getByAge(min,max);
     }
     @GetMapping("/by-faculty")
-    public Collection<Student> byFaculty(Long facultyId) {
+    public Collection<Student> byFaculty(@RequestParam Long facultyId) {
         return studentService.getByFaculty(facultyId);
     }
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
