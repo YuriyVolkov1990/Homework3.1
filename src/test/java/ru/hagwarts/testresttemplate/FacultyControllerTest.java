@@ -82,11 +82,11 @@ public class FacultyControllerTest {
         response = testRestTemplate.getForEntity("/faculty/" + faculty.getId(), Faculty.class);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getColor()).isEqualTo("red");
-
     }
     @Test
     void delete() {
         ResponseEntity<Faculty> response = createFaculty("math", "blue");
+        assertThat(response.getBody()).isNotNull();
         testRestTemplate.delete("/faculty/" + response.getBody().getId());
         response = testRestTemplate.getForEntity("/faculty/" + response.getBody().getId(), Faculty.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
