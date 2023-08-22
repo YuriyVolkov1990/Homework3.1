@@ -68,8 +68,6 @@ public class FacultyControllerTest {
         Collection<Faculty> body = forEntity.getBody();
         assertThat(body.isEmpty()).isFalse();
         assertThat(body.size()).isEqualTo(2);
-//        assertThat(body).contains(PHIL);
-//        assertThat(body).contains(LANG);
     }
     @Test
     void update() {
