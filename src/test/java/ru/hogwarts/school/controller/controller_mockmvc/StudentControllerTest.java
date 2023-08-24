@@ -99,8 +99,8 @@ public class StudentControllerTest {
     @Test
     void ageBetweenTest() throws Exception {
         when(studentRepository.findAllByAgeBetween(0, 20)).thenReturn(Arrays.asList(
-                new Student(1L, "ivan", 20),
-                new Student(2L, "dima", 21)
+                new Student(1L, "ivan", 15),
+                new Student(2L, "dima", 16)
         ));
         mockMvc.perform(MockMvcRequestBuilders.get("/student/age-between?min=0&max=20")
                         .contentType(MediaType.APPLICATION_JSON)
