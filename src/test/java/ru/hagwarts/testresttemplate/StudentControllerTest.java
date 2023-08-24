@@ -104,28 +104,29 @@ public class StudentControllerTest {
     }
     @Test
     void byFaculty() {
-        ResponseEntity<Collection> response = testRestTemplate.getForEntity("/student", Collection.class);
-        Collection expectedCollection = response.getBody();
+        ResponseEntity<Collection> students = testRestTemplate.getForEntity("/student", Collection.class);
+        Collection expectedCollection = students.getBody();
         System.out.println("================");
-        System.out.println(expectedCollection);//взял коллекцию из init(), faculty=null
+        System.out.println(students.getBody());//взял коллекцию из init(), faculty=null
         System.out.println("================");
         Faculty faculty = new Faculty(1L,"dfsdf","rerew");
-        faculty.setStudents((List<Student>) response.getBody());
+        faculty.setStudents((List<Student>) students.getBody());
         System.out.println("---------------");
-        System.out.println(faculty.getStudents());//привязал коллекцию студентов к факультету через setStudents, получаю обратно коллекцию через getStudents, но всё равно faculty=null
+        System.out.println(faculty.getStudents());//привязал коллекцию студентов к факультету через setStudents, получаю обратно коллекцию через getStudents для проверки, но всё равно faculty=null
         System.out.println("---------------");
         ResponseEntity<Faculty> facultyResp = testRestTemplate.postForEntity("/faculty", faculty, Faculty.class);
         assertThat(facultyResp.getBody()).isNotNull();
         Long facultyId = facultyResp.getBody().getId();
-        response = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + facultyId, Collection.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
+        students = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + facultyId, Collection.class);
+        assertThat(students.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(students.getBody()).isNotNull();
         System.out.println("++++++++++++++++");
-        System.out.println(response.getBody());//после попытки достать студентов по номеру факультета получаю пустую коллекцию(видимо потому, что faculty=null)
+        System.out.println(students.getBody());//после попытки достать студентов по номеру факультета получаю [] (пустая коллекция???)(видимо потому, что faculty=null)
         System.out.println("++++++++++++++++");
-        assertThat(response.getBody()).isEqualTo(expectedCollection);
+        assertThat(students.getBody()).isEqualTo(expectedCollection);
         // не понимаю, что не так
     }
+
     private ResponseEntity<Student> createStudent(String name, int age) {
         Student request = new Student();
         request.setName(name);
