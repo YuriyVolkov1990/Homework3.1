@@ -109,6 +109,9 @@ public class FacultyControllerTest {
         assertThat(studentResp.getBody()).isNotNull();
         Long studentId = studentResp.getBody().getId();
         faculty = testRestTemplate.getForEntity("/faculty/by-student?studentId=" + studentId,Faculty.class);
+        System.out.println("++++++++++++++++");
+        System.out.println(faculty.getBody());
+        System.out.println("++++++++++++++++");
         assertThat(faculty.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(faculty.getBody()).isNotNull();
         assertThat(faculty.getBody()).isEqualTo(expectedFaculty);
