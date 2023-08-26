@@ -1,6 +1,5 @@
 package ru.hagwarts.testresttemplate;
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.Application;
@@ -18,7 +19,6 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,36 +108,16 @@ public class StudentControllerTest {
     @Test
     void byFaculty() {
         ResponseEntity<Student> student = createStudent("Germ", 15);
+        List<Student> list = new ArrayList<>();
+        list.add(student.getBody());
+        FACULTY.setStudents(list);
         Student expectedStudent = student.getBody();
-        ResponseEntity<Student> studentResp = testRestTemplate.postForEntity("/student", student, Student.class);
-        assertThat(studentResp.getBody()).isNotNull();
-        Long studentId = studentResp.getBody().getId();
-        student = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + studentId, Student.class);
+        Long facultyId = FACULTY.getId();
+        ResponseEntity<List<Student>> response = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + facultyId, null,null,
+                new ParameterizedTypeReference<List<Student>>(){});
         assertThat(student.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(student.getBody()).isNotNull();
         assertThat(student.getBody()).isEqualTo(expectedStudent);
-//        Collection expectedCollection = students.getBody();
-//        System.out.println("================");
-//        System.out.println(students.getBody());//взял коллекцию из init(), faculty=null
-//        System.out.println("================");
-//
-//
-//        FACULTY.setStudents((List<Student>) students.getBody());
-//        System.out.println("---------------");
-//        System.out.println(FACULTY.getStudents());//привязал коллекцию студентов к факультету через setStudents, получаю обратно коллекцию через getStudents для проверки, но всё равно faculty=null
-//        System.out.println("---------------");
-//
-//        ResponseEntity<Faculty> facultyResp = testRestTemplate.postForEntity("/faculty", FACULTY, Faculty.class);
-//        assertThat(facultyResp.getBody()).isNotNull();
-//        Long facultyId = facultyResp.getBody().getId();
-//        students = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + facultyId, Collection.class);
-//        assertThat(students.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        assertThat(students.getBody()).isNotNull();
-//        System.out.println("++++++++++++++++");
-//        System.out.println(students.getBody());//после попытки достать студентов по номеру факультета получаю [] (пустая коллекция???)(видимо потому, что faculty=null)
-//        System.out.println("++++++++++++++++");
-//        assertThat(students.getBody()).isEqualTo(expectedCollection);
-//        // не понимаю, что не так
     }
 
     private ResponseEntity<Student> createStudent(String name, int age) {
