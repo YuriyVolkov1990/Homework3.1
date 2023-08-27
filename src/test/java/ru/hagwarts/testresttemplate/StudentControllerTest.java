@@ -108,9 +108,6 @@ public class StudentControllerTest {
     @Test
     void byFaculty() {
         ResponseEntity<Student> student = createStudent("Germ", 15);
-        List<Student> list = new ArrayList<>();
-        list.add(student.getBody());
-        FACULTY.setStudents(list);
         Student expectedStudent = student.getBody();
         Long facultyId = FACULTY.getId();
         ResponseEntity<List<Student>> response = testRestTemplate.exchange("/student/by-faculty?facultyId=" + facultyId, HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
