@@ -93,7 +93,7 @@ public class FacultyControllerTest {
     }
     @Test
     void byColorOrNameTest() throws Exception {
-        when(facultyRepository.findAllByColorLikeIgnoreCaseOrNameLikeIgnoreCase("red", "den")).thenReturn(Arrays.asList(
+        when(facultyRepository.findAllByColorLikeIgnoreCaseOrNameLikeIgnoreCase("den", "den")).thenReturn(Arrays.asList(
                 new Faculty(1L, "wwww", "red"),
                 new Faculty(2L, "den", "black")
         ));
@@ -102,7 +102,7 @@ public class FacultyControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].id").value(1L))//No value at JSON path "$[0].id"
-                .andExpect(jsonPath("$[1].id").value(2L));//аналогично, не понимаю в чем проблема
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[1].id").value(2L));
     }
 }
