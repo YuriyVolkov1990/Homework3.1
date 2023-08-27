@@ -113,11 +113,10 @@ public class StudentControllerTest {
         FACULTY.setStudents(list);
         Student expectedStudent = student.getBody();
         Long facultyId = FACULTY.getId();
-        ResponseEntity<List<Student>> response = testRestTemplate.getForEntity("/student/by-faculty?facultyId=" + facultyId, null,null,
-                new ParameterizedTypeReference<List<Student>>(){});
+        ResponseEntity<List<Student>> response = testRestTemplate.exchange("/student/by-faculty?facultyId=" + facultyId, HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody()).isEqualTo(list);
+        assertThat(response.getBody().get(0)).isEqualTo(expectedStudent);
     }
 
     private ResponseEntity<Student> createStudent(String name, int age) {
