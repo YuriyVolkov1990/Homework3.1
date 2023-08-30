@@ -1,11 +1,13 @@
 package ru.hogwarts.school.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -16,10 +18,13 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
+    private final AvatarRepository avatarRepository;
+
     @Autowired
-    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.facultyRepository = facultyRepository;
+        this.avatarRepository = avatarRepository;
     }
 
     public Student createStudent(Student student) {
@@ -37,8 +42,9 @@ public class StudentService {
         existingStudent.setName(student.getName());
         return studentRepository.save(existingStudent);
     }
-
+    @Transactional
     public Student deleteStudent(Long studentId) {
+        avatarRepository.deleteByStudentId(studentId);
         Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
         studentRepository.delete(student);
         return student;
