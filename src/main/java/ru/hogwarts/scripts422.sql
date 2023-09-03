@@ -1,2 +1,2 @@
-create table car (brand varchar not null, model varchar not null, price int8, id text primary key);
-create table driver (name varchar, age int2 not null, carId text references car (id));
+create table car (brand varchar not null, model varchar not null, price int8, id int primary key);
+create table driver (name varchar unique not null, age int2 not null,haveLicence boolean, carId int references car (id));
