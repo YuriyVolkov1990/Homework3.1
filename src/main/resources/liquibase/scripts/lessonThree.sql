@@ -7,7 +7,7 @@ create table lessonThree (
 )
 
 -- changeset uvolkov:2
-create index names_index on lessonThree (name);
+create index names_index on student (name);
 
--- changeset uvolkov:2
-create index nameAndColor on lessonTree
+-- changeset uvolkov:3
+create index nameAndColor_index on faculty (name, color);
