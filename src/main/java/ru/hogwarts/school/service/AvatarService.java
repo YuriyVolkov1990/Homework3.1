@@ -38,6 +38,7 @@ public class AvatarService {
 
     public Long uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         logger.info("Запускаем метод uploadAvatar");
+        logger.debug("Размер файла = " + avatarFile.getSize());
         Files.createDirectories(avatarPath);
         int dotIndex = avatarFile.getOriginalFilename().lastIndexOf(".");
         String fileExtension = avatarFile.getOriginalFilename().substring(dotIndex + 1);
