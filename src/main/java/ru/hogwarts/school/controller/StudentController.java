@@ -101,4 +101,14 @@ public class StudentController {
     public List<Student> getLastN(@RequestParam int num) {
         return studentService.getLastStudents(num);
     }
+
+    @GetMapping("/stream/names-by-first-symbol")
+    public List<String> getBySymbol(char symbol) {
+        return studentService.getNamesStartedBy(symbol);
+    }
+
+    @GetMapping("/stream/average-age")
+    public double getAverageAge() {
+        return studentService.getAverageAge();
+    }
 }

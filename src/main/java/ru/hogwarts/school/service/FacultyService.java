@@ -71,4 +71,12 @@ public class FacultyService {
                 .map(Student::getFaculty)
                 .orElseThrow(StudentNotFoundException::new);
     }
+
+    public String getLongestName() {
+        return facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElseThrow(FacultyNotFoundException::new);
+    }
 }
