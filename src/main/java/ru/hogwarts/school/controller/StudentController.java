@@ -111,4 +111,13 @@ public class StudentController {
     public double getAverageAge() {
         return studentService.getAverageAge();
     }
+
+    @GetMapping("/stream/parallel")
+    public void parallel() {
+       studentService.print();
+    }
+    @GetMapping("/stream/parallelSync")
+    public void parallelSync() {
+        studentService.printSync();
+    }
 }

@@ -25,7 +25,7 @@ public class InfoController {
 //        Long result = Stream.iterate(1L, a -> a + 1)
 //                .limit(1_000_000)
 //                .reduce(0L, (a, b) -> a + b);
-        Long result = LongStream.range(1,1_000_001)
+        Long result = LongStream.range(1,50_000_001)
                 .parallel()
                 .sum();
         long timeConsumed = System.currentTimeMillis() - t;
