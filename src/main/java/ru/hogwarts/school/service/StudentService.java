@@ -136,7 +136,7 @@ public class StudentService {
             printSync(all.get(5).getName());
         }).start();
     }
-
+Comparator
     public synchronized void printSync(String name) {
         System.out.println(name);
     }
